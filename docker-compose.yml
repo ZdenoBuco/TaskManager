@@ -1,0 +1,20 @@
+version: "3.8"
+
+networks:
+  taskManager:
+    name: taskManager
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql
+    networks:
+      taskManager:
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - /home/zdenko/Desktop/TaskManager/mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306

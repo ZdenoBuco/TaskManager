@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager - signing up</title>
+</head>
+<body>
+<form method="POST">
+    <h1>Sign Up</h1>
+    <label>
+        <input type="text" placeholder="First name" required>
+    </label>
+    <label>
+        <input type="text" placeholder="Surname" required>
+    </label>
+    <label>
+        <input type="text" placeholder="Username" required>
+    </label>
+    <label>
+        <input type="email" placeholder="Email" required>
+    </label>
+    <label>
+        <input type="password" placeholder="Password" required>
+    </label>
+    <label>
+        <input type="password" placeholder="Confirm password" required>
+    </label>
+    <br><label for="birthDate">Date of birth:</label><br>
+    <input id="birthDate" type="date" required>
+
+    <p>Choose your gender:</p>
+    <input id="male" name="gender" value="MALE" type="radio" required>
+    <label for="male">male</label>
+    <input id="female" name="gender" value="FEMALE" type="radio">
+    <label for="female">female</label>
+    <input id="other" name="gender" value="OTHER" type="radio">
+    <label for="other">other</label>
+
+    <br><br><button type="submit">SIGN UP</button>
+</form>
+
+
+</body>
+</html>

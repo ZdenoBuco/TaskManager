@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.taskmanager.enums.Gender;
 import org.taskmanager.enums.Role;
 
 import java.time.LocalDate;
@@ -31,4 +32,5 @@ public class AppUser {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Role role;
+    private Gender gender;
 }

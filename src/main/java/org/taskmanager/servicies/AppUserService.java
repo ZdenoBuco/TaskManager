@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Gender;
 import org.taskmanager.enums.Role;
+import org.taskmanager.exceptions.TaskManagerException;
 import org.taskmanager.models.AppUser;
 import org.taskmanager.models.DTOs.AppUserRegistrationDTO;
 import org.taskmanager.models.Password;
@@ -12,6 +13,7 @@ import org.taskmanager.repositories.PasswordRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class AppUserService {
@@ -26,6 +28,10 @@ public class AppUserService {
 
     public void create(AppUserRegistrationDTO appUserDto) {
         LocalDate dateOfBirth = LocalDate.parse(appUserDto.getDateOfBirth());
+
+        if(appUserRepository.existsAppUserByEmail(appUserDto.getEmail())) {
+            throw new TaskManagerException("A user with this email already exists. Please choose a different email.");
+        }
 
         AppUser appUser = appUserRepository.save(AppUser.builder()
                 .username(appUserDto.getUsername())

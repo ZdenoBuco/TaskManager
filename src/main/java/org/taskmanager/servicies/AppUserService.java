@@ -10,10 +10,10 @@ import org.taskmanager.models.DTOs.AppUserRegistrationDTO;
 import org.taskmanager.models.Password;
 import org.taskmanager.repositories.AppUserRepository;
 import org.taskmanager.repositories.PasswordRepository;
+import org.taskmanager.utilities.validators.AppUserRegistrationDtoValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class AppUserService {
@@ -27,12 +27,13 @@ public class AppUserService {
     }
 
     public void create(AppUserRegistrationDTO appUserDto) {
-        LocalDate dateOfBirth = LocalDate.parse(appUserDto.getDateOfBirth());
+        AppUserRegistrationDtoValidator.validate(appUserDto);
 
         if(appUserRepository.existsAppUserByEmail(appUserDto.getEmail())) {
-            throw new TaskManagerException("A user with this email already exists. Please choose a different email.");
+            throw new TaskManagerException("A user with this email already exists. Please choose a different email.", 409);
         }
 
+        LocalDate dateOfBirth = LocalDate.parse(appUserDto.getDateOfBirth());
         AppUser appUser = appUserRepository.save(AppUser.builder()
                 .username(appUserDto.getUsername())
                 .name(appUserDto.getName())

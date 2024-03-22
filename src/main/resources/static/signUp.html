@@ -73,6 +73,7 @@
             document.getElementById("tooltip-password").style.display = 'none';
         }
     });
+
     function validateConfirmPassword() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
@@ -95,6 +96,7 @@
             return;
         }
 
+        // todo: pridat hashovanie passwordu pomocou sha256 na frontende a vlozenie do JSON
         const formData = {
             name: document.getElementById("name").value,
             surname: document.getElementById("surname").value,

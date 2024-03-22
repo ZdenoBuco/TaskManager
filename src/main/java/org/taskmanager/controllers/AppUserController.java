@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.taskmanager.exceptions.TaskManagerException;
 import org.taskmanager.models.DTOs.AppUserRegistrationDTO;
 import org.taskmanager.servicies.AppUserService;
 
@@ -21,11 +22,13 @@ public class AppUserController {
 
     @PostMapping("/user")
     public ResponseEntity<String> signUpUser(@RequestBody AppUserRegistrationDTO appUserRegistrationDTO) {
-         try {
-             appUserService.create(appUserRegistrationDTO);
-         } catch (Exception e) {
-             return ResponseEntity.status(409).body(e.getMessage());
-         }
-         return ResponseEntity.status(201).build();
+        try {
+            appUserService.create(appUserRegistrationDTO);
+            return ResponseEntity.status(201).build();
+        } catch (TaskManagerException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
     }
 }

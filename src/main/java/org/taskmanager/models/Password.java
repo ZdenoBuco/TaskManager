@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user_password")
 public class Password {
     @Id
     @GeneratedValue

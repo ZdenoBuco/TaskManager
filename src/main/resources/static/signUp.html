@@ -22,7 +22,7 @@
         <input type="text" placeholder="Surname" id="surname" required>
     </label>
     <label>
-        <input type="text" placeholder="Username" id="username" required>
+        <input type="text" placeholder="Nick name" id="nickName" required>
     </label>
     <label>
         <input type="email" placeholder="Email" id="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
@@ -97,7 +97,7 @@
         const formData = {
             name: document.getElementById("name").value,
             surname: document.getElementById("surname").value,
-            username: document.getElementById("username").value,
+            nickName: document.getElementById("nickName").value,
             email: document.getElementById("email").value,
             phone: document.getElementById("phone").value,
             password: document.getElementById("password").value,
@@ -105,7 +105,7 @@
             gender: document.querySelector('input[name="gender"]:checked').value
         };
 
-        fetch('/api/user', {
+        fetch('/api/v1/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

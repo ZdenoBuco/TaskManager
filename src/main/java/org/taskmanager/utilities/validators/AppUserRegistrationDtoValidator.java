@@ -8,8 +8,8 @@ import java.time.LocalDate;
 public class AppUserRegistrationDtoValidator {
 
     public static void validate(AppUserRegistrationDTO appUserDTO) {
-        if (appUserDTO.getUsername() == null || appUserDTO.getUsername().isBlank()) {
-            throw new TaskManagerException("Sign up request without username.", 400);
+        if (appUserDTO.getNickName() == null || appUserDTO.getNickName().isBlank()) {
+            throw new TaskManagerException("Sign up request without nick name.", 400);
         }
         if (appUserDTO.getName() == null || appUserDTO.getName().isBlank()) {
             throw new TaskManagerException("Sign up request without name.", 400);

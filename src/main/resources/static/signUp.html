@@ -32,7 +32,7 @@
     </label>
     <label>
         <input type="password" placeholder="Password" id="password" oninput="validateConfirmPassword()"
-               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_+=])[A-Za-z\d!@#$%^&*()-_+=]{8,30}$" required>
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+\-]).{8,16}$" required>
     </label>
     <label>
         <input type="password" placeholder="Confirm password" id="confirmPassword" oninput="validateConfirmPassword()"

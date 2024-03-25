@@ -11,6 +11,7 @@ import org.taskmanager.enums.Role;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -19,8 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 public class AppUser {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue()
+    private UUID id;
     private String username;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Password> password;

@@ -30,7 +30,7 @@ public class AppUserService {
         AppUserRegistrationDtoValidator.validate(appUserDto);
 
         if(appUserRepository.existsAppUserByEmail(appUserDto.getEmail())) {
-            throw new TaskManagerException("A user with this email already exists. Please choose a different email.", 409);
+            throw new TaskManagerException("A user with this email already exists. Please choose a different email.", 400);
         }
 
         LocalDate dateOfBirth = LocalDate.parse(appUserDto.getDateOfBirth());

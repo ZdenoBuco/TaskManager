@@ -25,7 +25,7 @@ public class AppUserRegistrationDtoValidator {
                 throw new TaskManagerException("Sign up request with invalid date of birth - must be in the past.", 400);
             }
         } catch (Exception e) {
-            throw new TaskManagerException("Sign up request with invalid date of birth - invalid format.", 400);
+            throw new TaskManagerException("Sign up request with invalid date of birth - date of birth in the future.", 400);
         }
 //        if (appUserDTO.getPassword() == null || appUserDTO.getPassword().isBlank() || appUserDTO.getPassword().length() != 64) {
 //            throw new TaskManagerException("Sign up request without password or invalid cryptographic hash function.", 400);

@@ -18,6 +18,8 @@ import org.taskmanager.utilities.validators.AppUserRegistrationDtoValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AppUserService {
@@ -63,7 +65,10 @@ public class AppUserService {
                 .user(appUser)
                 .build());
 
-        String jwtToken = jwtService.generateToken(appUserRepository.findAppUserById(appUser.getId()).get());
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("admin", appUser.getRole() == Role.ADMIN);
+
+        String jwtToken = jwtService.generateToken(claims, appUserRepository.findAppUserById(appUser.getId()).get());
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 }

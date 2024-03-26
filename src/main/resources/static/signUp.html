@@ -93,7 +93,6 @@
             return;
         }
 
-        // todo: pridat hashovanie passwordu pomocou sha256 na frontende a vlozenie do JSON
         const formData = {
             name: document.getElementById("name").value,
             surname: document.getElementById("surname").value,
@@ -114,8 +113,8 @@
         })
             .then(response => {
                 if (response.status === 201) {
-                    // todo pridat presmerovanie na dashboard
                     console.log("Form submitted successfully!");
+                    window.location.href = '/'
                 } else {
                     return response.text()
                 }

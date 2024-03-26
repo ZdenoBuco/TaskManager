@@ -5,21 +5,73 @@
     <title>Task Manager - log in or sign up</title>
 </head>
 <body>
-    <h1>Home page</h1>
-    <h2>Welcome in Task Manager web</h2>
-    <p>More info will be added.</p>
+<h1>Home page</h1>
+<h2>Welcome in Task Manager web</h2>
+<p>More info will be added.</p>
 
-    <form >
-        <label>
-            <input type="email" placeholder="Enter yor email">
-        </label><br>
-        <label>
-            <input type="password" placeholder="Enter your password">
-        </label><br><br>
+<form id="signInForm" onsubmit="submitForm()">
+    <label>
+        <input type="email" placeholder="Enter yor email" id="email">
+    </label><br>
+    <label>
+        <input type="password" placeholder="Enter your password" id="password">
+    </label>
+    <br><span id="error" style="color: red; display: none;"></span>
 
-        <button>Sign In</button>
-    </form>
+    <br><br>
+    <button>Sign In</button>
+</form>
 
-    <a href="/signup">Sign Up</a>
+<a href="/signup">Sign Up</a>
+<script>
+    let input = document.getElementById("signInForm");
+    input.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
+
+    function submitForm() {
+        var errorSpan = document.getElementById("error");
+
+        const formData = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        }
+
+        fetch('/api/v1/auth/authenticate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Auth successful!");
+                    return response.json()
+                        .then(response => {
+                            localStorage.setItem('token', response.token)
+                            fetch('/dashboard', {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': 'Bearer ' + response.token
+                                }
+                            }).then(htmlResponse => htmlResponse.text())
+                                .then(html => document.documentElement.innerHTML = html)
+                        })
+                } else {
+                    return response.text()
+                        .then(data => {
+                            if (data) {
+                                errorSpan.innerText = data;
+                                errorSpan.style.display = 'inline'
+                            }
+                        })
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+</script>
 </body>
 </html>

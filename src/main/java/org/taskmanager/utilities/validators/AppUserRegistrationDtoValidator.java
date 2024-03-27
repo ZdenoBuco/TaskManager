@@ -27,9 +27,6 @@ public class AppUserRegistrationDtoValidator {
         } catch (Exception e) {
             throw new TaskManagerException("Sign up request with invalid date of birth - date of birth in the future.", 400);
         }
-//        if (appUserDTO.getPassword() == null || appUserDTO.getPassword().isBlank() || appUserDTO.getPassword().length() != 64) {
-//            throw new TaskManagerException("Sign up request without password or invalid cryptographic hash function.", 400);
-//        }
         if (appUserDTO.getEmail() == null || !appUserDTO.getEmail().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
             throw new TaskManagerException("Sign up request without email or invalid email.", 400);
         }

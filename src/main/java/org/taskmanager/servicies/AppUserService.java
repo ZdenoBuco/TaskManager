@@ -1,6 +1,6 @@
 package org.taskmanager.servicies;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Gender;
@@ -22,21 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final PasswordRepository passwordRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationService authenticationService;
     private final JwtService jwtService;
-
-    @Autowired
-    public AppUserService(AppUserRepository appUserRepository, PasswordRepository passwordRepository, PasswordEncoder passwordEncoder, AuthenticationService authenticationService, JwtService jwtService) {
-        this.appUserRepository = appUserRepository;
-        this.passwordRepository = passwordRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationService = authenticationService;
-        this.jwtService = jwtService;
-    }
 
     public AuthenticationResponse create(AppUserRegistrationDTO appUserDto) {
         AppUserRegistrationDtoValidator.validate(appUserDto);

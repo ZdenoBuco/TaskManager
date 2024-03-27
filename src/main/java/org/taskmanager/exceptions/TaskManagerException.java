@@ -3,7 +3,6 @@ package org.taskmanager.exceptions;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class TaskManagerException extends RuntimeException{

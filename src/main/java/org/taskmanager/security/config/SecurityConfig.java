@@ -31,6 +31,14 @@ public class SecurityConfig {
                         .permitAll()
                         .anyRequest()
                         .authenticated())
+                .formLogin(login -> login
+                        .loginPage("/")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .deleteCookies("token")
+                        .logoutSuccessUrl("/")
+                        .clearAuthentication(true))
                 .sessionManagement(sm -> sm
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

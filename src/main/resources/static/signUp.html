@@ -112,10 +112,7 @@
             body: JSON.stringify(formData)
         })
             .then(response => {
-                if (response.status === 201) {
-                    console.log("Form submitted successfully!");
-                    window.location.href = '/'
-                } else {
+                if (response.status !== 201) {
                     return response.text()
                 }
             })

@@ -22,7 +22,7 @@
         <input type="text" placeholder="Surname" id="surname" required>
     </label>
     <label>
-        <input type="text" placeholder="Username" id="username" required>
+        <input type="text" placeholder="Nick name" id="nickName" required>
     </label>
     <label>
         <input type="email" placeholder="Email" id="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
@@ -32,12 +32,11 @@
     </label>
     <label>
         <input type="password" placeholder="Password" id="password" oninput="validateConfirmPassword()"
-               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_+=])[A-Za-z\d!@#$%^&*()-_+=]{8,30}$" required>
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+\-]).{8,30}$" required>
     </label>
     <label>
         <input type="password" placeholder="Confirm password" id="confirmPassword" oninput="validateConfirmPassword()"
                required>
-        <span id="passwordError" style="color: red; display: none;">Passwords do not match</span>
     </label>
     <br><label for="dateOfBirth">Date of birth:</label><br>
     <input type="date" id="dateOfBirth" required>
@@ -49,6 +48,7 @@
     <label for="female">female</label>
     <input id="other" name="gender" value="OTHER" type="radio">
     <label for="other">other</label>
+    <br><span id="error" style="color: red; display: none;">Passwords do not match</span>
 
     <br><br>
     <button>SIGN UP</button>
@@ -77,7 +77,7 @@
     function validateConfirmPassword() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
-        var errorSpan = document.getElementById("passwordError");
+        var errorSpan = document.getElementById("error");
 
         if (confirmPassword !== password) {
             errorSpan.style.display = "inline";
@@ -87,20 +87,16 @@
     }
 
     function submitForm() {
-        var password = document.getElementById("password").value;
-        var confirmPassword = document.getElementById("confirmPassword").value;
-        var errorSpan = document.getElementById("passwordError");
+        var errorSpan = document.getElementById("error");
 
-        if (password !== confirmPassword) {
-            errorSpan.style.display = "inline";
+        if (!isDateOfBirthValid()) {
             return;
         }
 
-        // todo: pridat hashovanie passwordu pomocou sha256 na frontende a vlozenie do JSON
         const formData = {
             name: document.getElementById("name").value,
             surname: document.getElementById("surname").value,
-            username: document.getElementById("username").value,
+            nickName: document.getElementById("nickName").value,
             email: document.getElementById("email").value,
             phone: document.getElementById("phone").value,
             password: document.getElementById("password").value,
@@ -108,7 +104,7 @@
             gender: document.querySelector('input[name="gender"]:checked').value
         };
 
-        fetch('/api/user', {
+        fetch('/api/v1/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -116,14 +112,33 @@
             body: JSON.stringify(formData)
         })
             .then(response => {
-                if (response.status === 201) {
-                    // todo pridat presmerovanie na dashboard
-                    console.log("Form submitted successfully!");
+                if (response.status !== 201) {
+                    return response.text()
+                }
+            })
+            .then(data => {
+                if (data) {
+                    errorSpan.innerText = data;
+                    errorSpan.style.display = "inline"
                 }
             })
             .catch(error => {
                 console.error(error);
             });
+    }
+
+    function isDateOfBirthValid() {
+        var dob = new Date(document.getElementById("dateOfBirth").value);
+        var currentDate = new Date();
+
+        if (dob >= currentDate) {
+            document.getElementById("error").innerText = "Date of birth must be in the past.";
+            document.getElementById("error").style.display = "inline";
+            return false;
+        } else {
+            document.getElementById("error").style.display = "none";
+            return true;
+        }
     }
 </script>
 </body>

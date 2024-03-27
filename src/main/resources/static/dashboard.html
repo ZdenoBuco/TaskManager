@@ -5,7 +5,16 @@
     <title>Task Manager</title>
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <p>do it later</p>
+<h1>Dashboard</h1>
+<p>do it later</p>
+
+<button id="logoutButton">Logout</button>
+
+<script>
+    document.getElementById("logoutButton").addEventListener("click", logout);
+    function logout() {
+        window.location.href = "/logout";
+    }
+</script>
 </body>
 </html>

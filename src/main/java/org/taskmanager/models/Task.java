@@ -1,5 +1,6 @@
 package org.taskmanager.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,4 +30,7 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime dueDate;
     private LocalDateTime lastUpdated;
+    @ManyToOne
+    @JsonIgnore
+    private AppUser owner;
 }

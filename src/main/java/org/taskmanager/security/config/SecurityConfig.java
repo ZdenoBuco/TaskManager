@@ -27,8 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR)
                         .permitAll()
-//TODO: vyriesit extrahovanie usera (email), a na zaklade toho kontrolovat, ci ma user pravo na narabanie s danym taskom + odstranit "api/v1/tasks/**" z permitAll()
-                        .requestMatchers("/api/v1/auth/**", "/", "/signup", "api/v1/tasks/**")
+                        .requestMatchers("/api/v1/auth/**", "/", "/signup")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

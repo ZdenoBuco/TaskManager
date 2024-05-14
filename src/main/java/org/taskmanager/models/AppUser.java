@@ -36,6 +36,8 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private Gender gender;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

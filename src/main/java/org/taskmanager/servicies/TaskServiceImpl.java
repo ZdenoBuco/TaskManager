@@ -1,6 +1,7 @@
 package org.taskmanager.servicies;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Status;
 import org.taskmanager.exceptions.TaskManagerException;
 import org.taskmanager.models.DTOs.TaskDTO;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
@@ -46,8 +48,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(TaskDTO taskDto) {
-        taskRepository.deleteById(taskDto.getId());
+    public void deleteTask(UUID taskId) {
+        taskRepository.deleteById(taskId);
     }
 
     @Override

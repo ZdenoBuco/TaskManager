@@ -35,7 +35,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<String> updateTask(@PathVariable UUID taskId) {
+    public ResponseEntity<String> deleteTask(@PathVariable UUID taskId) {
         try {
             taskService.deleteTask(taskId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

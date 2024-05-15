@@ -12,7 +12,6 @@ import org.taskmanager.models.DTOs.AppUserRegistrationDTO;
 import org.taskmanager.models.Password;
 import org.taskmanager.repositories.AppUserRepository;
 import org.taskmanager.repositories.PasswordRepository;
-import org.taskmanager.security.AuthenticationService;
 import org.taskmanager.security.JwtService;
 import org.taskmanager.utilities.validators.AppUserRegistrationDtoValidator;
 

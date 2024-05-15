@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    //@Value("${JWT_SIGNING_KEY}") todo: add new keu into .env
+    //@Value("${JWT_SIGNING_KEY}") todo: add new key into .env
     private static final String JWT_SIGNING_KEY = "0fff87a37ed91631380b39fac1698f6edbdb0ba93bb86a2754c274dfa058f52d";
     // token expiration in [ms]
     private static final int TOKEN_EXPIRATION = 1000 * 60 * 60 * 24;

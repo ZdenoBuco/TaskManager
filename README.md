@@ -14,7 +14,6 @@ V Postmanovi vykonaj nalsedujůce kroky:
 </p>
 <ol>
   <li>POST request na: localhost:8080/api/v1/auth/register , príklad body JSON:</li>
-<p>
 {<br>
     "name": "John",<br>
     "surname": "Doe",<br>
@@ -25,7 +24,12 @@ V Postmanovi vykonaj nalsedujůce kroky:
     "dateOfBirth": "1990-01-01",<br>
     "gender": "MALE"<br>
 }
-</p>
   <li>JWT token z odpovede si ulož do cookie pre danú doménu (napr.: localhost:8080/*) vo fomáte: token=*hodnota_tokenu*</li>
-  <li>Možeš skúšať jednotlivé endpointy definované v TaskController</li>
+  <li>Možeš skúšať jednotlivé endpointy definované v TaskController, napr. JSON na vytvorenie tasku:</li>
+{<br>
+"priority": "HIGH",<br>
+"title": "Task 3",<br>
+"description": "Description for Task 3",<br>
+"dueDate": "2024-06-03T12:00:00"<br>
+}
 </ol>

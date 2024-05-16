@@ -1,6 +1,5 @@
 package org.taskmanager.servicies;
 
-import org.springframework.stereotype.Service;
 import org.taskmanager.models.DTOs.TaskDTO;
 import org.taskmanager.models.Task;
 

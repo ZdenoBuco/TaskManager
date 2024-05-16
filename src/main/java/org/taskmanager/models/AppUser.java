@@ -35,6 +35,7 @@ public class AppUser implements UserDetails {
     private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Task> tasks;

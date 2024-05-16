@@ -1,7 +1,8 @@
 package org.taskmanager.servicies;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Status;
@@ -13,9 +14,9 @@ import org.taskmanager.repositories.AppUserRepository;
 import org.taskmanager.repositories.TaskRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +24,12 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final AppUserRepository appUserRepository;
     private String userEmail;
+    private AppUser user;
+    private Boolean isAdmin;
 
     @Override
     public Task createTask(TaskDTO taskDto) {
-        userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        AppUser user = appUserRepository.findAppUserByEmail(userEmail).get();
-
+        loadSignedAppUser();
         Task newTask = Task.builder()
                 .owner(user)
                 .priority(taskDto.getPriority())
@@ -45,7 +46,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateTask(TaskDTO taskDto) {
-        userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        loadSignedAppUser();
         Optional<Task> taskOptional = taskRepository.findById(taskDto.getId());
         Task task = taskOptional.orElseThrow(() -> new TaskManagerException("Task not found.", 404));
         taskOwnerCheck(task);
@@ -60,8 +61,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public void deleteTask(UUID taskId) {
-        userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        loadSignedAppUser();
         Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskManagerException("Task not found.", 404));
         taskOwnerCheck(task);
         taskRepository.deleteById(taskId);
@@ -69,21 +71,31 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getTasks() {
-        userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        loadSignedAppUser();
+        if (isAdmin) {
+            return taskRepository.findAll();
+        }
         return taskRepository.findAllByOwner_Email(userEmail);
     }
 
     @Override
     public Task getTaskById(UUID id) {
-        userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        loadSignedAppUser();
         Task task = taskRepository.findById(id).orElseThrow(() -> new TaskManagerException("Task not found.", 404));
         taskOwnerCheck(task);
         return task;
     }
 
     private void taskOwnerCheck(Task task) {
-        if (!userEmail.equals(task.getOwner().getEmail())) {
+        if (!userEmail.equals(task.getOwner().getEmail()) && !isAdmin) {
             throw new TaskManagerException("You are not authorized to modify or access this task.", 403);
         }
+    }
+
+    private void loadSignedAppUser() {
+        userEmail = getContext().getAuthentication().getName();
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        isAdmin = authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
+        user = appUserRepository.findAppUserByEmail(userEmail).get();
     }
 }

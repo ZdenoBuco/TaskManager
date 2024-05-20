@@ -47,7 +47,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task updateTask(TaskDTO taskDto) {
         loadSignedAppUser();
-        Task task = taskRepository.findById(taskDto.getId()).orElseThrow(() -> new TaskManagerException("Task not found.", 404));
+        Optional<Task> taskOptional = taskRepository.findById(taskDto.getId());
+        Task task = taskOptional.orElseThrow(() -> new TaskManagerException("Task not found.", 404));
         taskOwnerCheck(task);
         task.setPriority(taskDto.getPriority());
         task.setStatus(taskDto.getStatus());

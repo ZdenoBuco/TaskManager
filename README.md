@@ -3,7 +3,6 @@
 ## Postup spustenia:<br>
 <ol>
   <li>Nastaviť v docker-compose premenné: MYSQL_ROOT_PASSWORD a MYSQL_DATABASE + volumes</li>
-  <li>nastav environment variables (použité v application.properties)</li>
   <li>docker-compose up -d</li>
   <li>Nastaviť pripojenie k PostgreSQL</li>
 </ol>
@@ -34,3 +33,4 @@ V Postmanovi vykonaj nalsedujůce kroky:
 "dueDate": "2024-06-03T12:00:00"<br>
 }
 </ol>
+79020340-c715-46cd-9324-19442f529d6e

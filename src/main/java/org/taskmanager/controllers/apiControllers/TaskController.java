@@ -17,18 +17,18 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping("")
-    public ResponseEntity<String> createTask(@RequestBody TaskDTO task) {
+    public ResponseEntity<?> createTask(@RequestBody TaskDTO task) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task).toString());
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(task));
         } catch (TaskManagerException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
     @PutMapping("")
-    public ResponseEntity<String> updateTask(@RequestBody TaskDTO task) {
+    public ResponseEntity<?> updateTask(@RequestBody TaskDTO task) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(task).toString());
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.updateTask(task));
         } catch (TaskManagerException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
@@ -45,18 +45,18 @@ public class TaskController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<String> getTask(@PathVariable UUID taskId) {
+    public ResponseEntity<?> getTask(@PathVariable UUID taskId) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.getTaskById(taskId).toString());
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.getTaskById(taskId));
         } catch (TaskManagerException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 
     @GetMapping("")
-    public ResponseEntity<String> getTasks() {
+    public ResponseEntity<?> getTasks() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(taskService.getTasks().toString());
+            return ResponseEntity.status(HttpStatus.OK).body(taskService.getTasks());
         } catch (TaskManagerException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }

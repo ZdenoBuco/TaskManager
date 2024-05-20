@@ -1,13 +1,13 @@
 package org.taskmanager.utilities.validators;
 
 import org.taskmanager.exceptions.TaskManagerException;
-import org.taskmanager.models.DTOs.AppUserRegistrationDTO;
+import org.taskmanager.models.InDTOs.AppUserRegistrationInDTO;
 
 import java.time.LocalDate;
 
 public class AppUserRegistrationDtoValidator {
 
-    public static void validate(AppUserRegistrationDTO appUserDTO) {
+    public static void validate(AppUserRegistrationInDTO appUserDTO) {
         if (appUserDTO.getNickName() == null || appUserDTO.getNickName().isBlank()) {
             throw new TaskManagerException("Sign up request without nick name.", 400);
         }

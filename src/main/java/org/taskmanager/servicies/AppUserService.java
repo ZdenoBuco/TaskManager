@@ -3,12 +3,11 @@ package org.taskmanager.servicies;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.taskmanager.enums.Gender;
 import org.taskmanager.enums.Role;
 import org.taskmanager.exceptions.TaskManagerException;
 import org.taskmanager.models.AppUser;
-import org.taskmanager.models.AuthenticationResponse;
-import org.taskmanager.models.DTOs.AppUserRegistrationDTO;
+import org.taskmanager.models.OutDTOs.AuthenticationResponse;
+import org.taskmanager.models.InDTOs.AppUserRegistrationInDTO;
 import org.taskmanager.models.Password;
 import org.taskmanager.repositories.AppUserRepository;
 import org.taskmanager.repositories.PasswordRepository;
@@ -28,7 +27,7 @@ public class AppUserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthenticationResponse create(AppUserRegistrationDTO appUserDto) {
+    public AuthenticationResponse create(AppUserRegistrationInDTO appUserDto) {
         AppUserRegistrationDtoValidator.validate(appUserDto);
 
         if (appUserRepository.existsAppUserByEmail(appUserDto.getEmail())) {

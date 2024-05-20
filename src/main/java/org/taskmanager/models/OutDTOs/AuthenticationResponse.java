@@ -1,4 +1,4 @@
-package org.taskmanager.models.DTOs;
+package org.taskmanager.models.OutDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppUserLogInDTO {
-    private String email;
-    private String password;
+public class AuthenticationResponse {
+    private String token;
 }

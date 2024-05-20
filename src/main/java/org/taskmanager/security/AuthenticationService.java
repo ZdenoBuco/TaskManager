@@ -6,8 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Role;
 import org.taskmanager.models.AppUser;
-import org.taskmanager.models.AuthenticationResponse;
-import org.taskmanager.models.DTOs.AppUserLogInDTO;
+import org.taskmanager.models.OutDTOs.AuthenticationResponse;
+import org.taskmanager.models.InDTOs.AppUserLogInInDTO;
 import org.taskmanager.repositories.AppUserRepository;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class AuthenticationService {
     private final AppUserRepository appUserRepository;
     private final JwtService jwtService;
 
-    public AuthenticationResponse authenticate(AppUserLogInDTO logInDTO) {
+    public AuthenticationResponse authenticate(AppUserLogInInDTO logInDTO) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logInDTO.getEmail(), logInDTO.getPassword()));
 
         AppUser appUser = appUserRepository.findAppUserByEmail(logInDTO.getEmail()).orElseThrow();

@@ -1,4 +1,4 @@
-package org.taskmanager.models.DTOs;
+package org.taskmanager.models.InDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppUserRegistrationDTO {
+public class AppUserRegistrationInDTO {
     private String nickName;
     private String password;
     private String name;

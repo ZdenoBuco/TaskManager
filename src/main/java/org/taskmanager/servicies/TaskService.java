@@ -1,15 +1,15 @@
 package org.taskmanager.servicies;
 
-import org.taskmanager.models.DTOs.TaskDTO;
-import org.taskmanager.models.Task;
+import org.taskmanager.models.InDTOs.TaskInDTO;
+import org.taskmanager.models.OutDTOs.TaskOutDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface TaskService {
-    Task createTask(TaskDTO task);
-    Task updateTask(TaskDTO task);
+    TaskOutDTO createTask(TaskInDTO task);
+    TaskOutDTO updateTask(TaskInDTO task);
     void deleteTask(UUID taskId);
-    List<Task> getTasks();
-    Task getTaskById(UUID id);
+    List<TaskOutDTO> getTasks();
+    TaskOutDTO getTaskById(UUID id);
 }

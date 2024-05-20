@@ -17,15 +17,11 @@ public class AppUserRegistrationDtoValidator {
         if (appUserDTO.getSurname() == null || appUserDTO.getSurname().isBlank()) {
             throw new TaskManagerException("Sign up request without surname.", 400);
         }
-        if (appUserDTO.getDateOfBirth() == null || !appUserDTO.getDateOfBirth().matches("^\\d{4}-\\d{2}-\\d{2}$") ) {
-            throw new TaskManagerException("Sign up request with invalid date of birth - invalid format.", 400);
+        if (appUserDTO.getDateOfBirth() == null) {
+            throw new TaskManagerException("Sign up request with invalid date of birth - invalid value.", 400);
         }
-        try {
-            if(LocalDate.parse(appUserDTO.getDateOfBirth()).isAfter(LocalDate.now())) {
-                throw new TaskManagerException("Sign up request with invalid date of birth - must be in the past.", 400);
-            }
-        } catch (Exception e) {
-            throw new TaskManagerException("Sign up request with invalid date of birth - date of birth in the future.", 400);
+        if (appUserDTO.getDateOfBirth().isAfter(LocalDate.now())) {
+            throw new TaskManagerException("Sign up request with invalid date of birth - must be in the past.", 400);
         }
         if (appUserDTO.getEmail() == null || !appUserDTO.getEmail().matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
             throw new TaskManagerException("Sign up request without email or invalid email.", 400);

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.taskmanager.enums.Gender;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -16,6 +19,6 @@ public class AppUserRegistrationDTO {
     private String surname;
     private String email;
     private String phone;
-    private String dateOfBirth;
-    private String gender;
+    private LocalDate dateOfBirth;
+    private Gender gender;
 }

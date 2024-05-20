@@ -35,7 +35,7 @@ public class AppUserService {
             throw new TaskManagerException("A user with this email already exists. Please choose a different email.", 400);
         }
 
-        LocalDate dateOfBirth = LocalDate.parse(appUserDto.getDateOfBirth());
+        LocalDate dateOfBirth = appUserDto.getDateOfBirth();
         AppUser appUser = appUserRepository.save(AppUser.builder()
                 .nickName(appUserDto.getNickName())
                 .name(appUserDto.getName())
@@ -45,7 +45,7 @@ public class AppUserService {
                 .dateOfBirth(dateOfBirth)
                 .createdAt(LocalDateTime.now())
                 .role(Role.USER)
-                .gender(Gender.valueOf(appUserDto.getGender()))
+                .gender(appUserDto.getGender())
                 .build());
 
         passwordRepository.save(Password.builder()

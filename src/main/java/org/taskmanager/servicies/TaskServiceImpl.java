@@ -8,13 +8,15 @@ import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Status;
 import org.taskmanager.exceptions.TaskManagerException;
 import org.taskmanager.models.AppUser;
-import org.taskmanager.models.DTOs.TaskDTO;
+import org.taskmanager.models.InDTOs.TaskInDTO;
+import org.taskmanager.models.OutDTOs.TaskOutDTO;
 import org.taskmanager.models.Task;
 import org.taskmanager.repositories.AppUserRepository;
 import org.taskmanager.repositories.TaskRepository;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
@@ -28,7 +30,7 @@ public class TaskServiceImpl implements TaskService {
     private Boolean isAdmin;
 
     @Override
-    public Task createTask(TaskDTO taskDto) {
+    public TaskOutDTO createTask(TaskInDTO taskDto) {
         loadSignedAppUser();
         Task newTask = Task.builder()
                 .owner(user)
@@ -41,14 +43,13 @@ public class TaskServiceImpl implements TaskService {
                 .lastUpdated(LocalDateTime.now())
                 .build();
 
-        return taskRepository.save(newTask);
+        return new TaskOutDTO(taskRepository.save(newTask));
     }
 
     @Override
-    public Task updateTask(TaskDTO taskDto) {
+    public TaskOutDTO updateTask(TaskInDTO taskDto) {
         loadSignedAppUser();
-        Optional<Task> taskOptional = taskRepository.findById(taskDto.getId());
-        Task task = taskOptional.orElseThrow(() -> new TaskManagerException("Task not found.", 404));
+        Task task = taskRepository.findById(taskDto.getId()).orElseThrow(() -> new TaskManagerException("Task not found.", 404));
         taskOwnerCheck(task);
         task.setPriority(taskDto.getPriority());
         task.setStatus(taskDto.getStatus());
@@ -57,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDueDate(taskDto.getDueDate());
         task.setLastUpdated(LocalDateTime.now());
 
-        return taskRepository.save(task);
+        return new TaskOutDTO(taskRepository.save(task));
     }
 
     @Override
@@ -70,20 +71,20 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public List<TaskOutDTO> getTasks() {
         loadSignedAppUser();
         if (isAdmin) {
-            return taskRepository.findAll();
+            return taskRepository.findAll().stream().map(TaskOutDTO::new).collect(Collectors.toList());
         }
-        return taskRepository.findAllByOwner_Email(userEmail);
+        return taskRepository.findAllByOwner_Email(userEmail).stream().map(TaskOutDTO::new).collect(Collectors.toList());
     }
 
     @Override
-    public Task getTaskById(UUID id) {
+    public TaskOutDTO getTaskById(UUID id) {
         loadSignedAppUser();
         Task task = taskRepository.findById(id).orElseThrow(() -> new TaskManagerException("Task not found.", 404));
         taskOwnerCheck(task);
-        return task;
+        return new TaskOutDTO(task);
     }
 
     private void taskOwnerCheck(Task task) {

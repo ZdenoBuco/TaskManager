@@ -1,4 +1,4 @@
-package org.taskmanager.models;
+package org.taskmanager.models.InDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationResponse {
-    private String token;
+public class AppUserLogInInDTO {
+    private String email;
+    private String password;
 }

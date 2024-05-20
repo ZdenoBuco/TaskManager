@@ -18,8 +18,8 @@ import java.util.function.Function;
 public class JwtService {
     //@Value("${JWT_SIGNING_KEY}") todo: add new key into .env
     private static final String JWT_SIGNING_KEY = "0fff87a37ed91631380b39fac1698f6edbdb0ba93bb86a2754c274dfa058f52d";
-    // token expiration in [ms]
-    private static final int TOKEN_EXPIRATION = 1000 * 60 * 60 * 24;
+    // token expiration in [s] - 1 month
+    private static final int TOKEN_EXPIRATION = 60 * 60 * 24 * 30;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -53,8 +53,7 @@ public class JwtService {
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
-
+                .expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION * 1000L))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

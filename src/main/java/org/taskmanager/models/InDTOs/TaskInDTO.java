@@ -1,4 +1,4 @@
-package org.taskmanager.models.DTOs;
+package org.taskmanager.models.InDTOs;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDTO {
+public class TaskInDTO {
     private UUID id;
     @Enumerated(EnumType.STRING)
     private Priority priority;

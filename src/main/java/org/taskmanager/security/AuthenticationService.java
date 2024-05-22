@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Role;
 import org.taskmanager.models.AppUser;
-import org.taskmanager.models.OutDTOs.AuthenticationResponse;
+import org.taskmanager.models.OutDTOs.AuthenticationOutDTO;
 import org.taskmanager.models.InDTOs.AppUserLogInInDTO;
 import org.taskmanager.repositories.AppUserRepository;
 
@@ -20,7 +20,7 @@ public class AuthenticationService {
     private final AppUserRepository appUserRepository;
     private final JwtService jwtService;
 
-    public AuthenticationResponse authenticate(AppUserLogInInDTO logInDTO) {
+    public AuthenticationOutDTO authenticate(AppUserLogInInDTO logInDTO) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(logInDTO.getEmail(), logInDTO.getPassword()));
 
         AppUser appUser = appUserRepository.findAppUserByEmail(logInDTO.getEmail()).orElseThrow();
@@ -29,6 +29,6 @@ public class AuthenticationService {
         claims.put("admin", appUser.getRole() == Role.ADMIN);
 
         String jwtToken = jwtService.generateToken(claims, appUser);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationOutDTO.builder().token(jwtToken).build();
     }
 }

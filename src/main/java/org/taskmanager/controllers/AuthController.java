@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.taskmanager.models.OutDTOs.AuthenticationResponse;
+import org.taskmanager.models.OutDTOs.AuthenticationOutDTO;
 import org.taskmanager.models.InDTOs.AppUserLogInInDTO;
 import org.taskmanager.models.InDTOs.AppUserRegistrationInDTO;
 import org.taskmanager.security.AuthenticationService;
@@ -20,12 +20,12 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> signUpUser(@RequestBody AppUserRegistrationInDTO appUserRegistrationDTO) {
+    public ResponseEntity<AuthenticationOutDTO> signUpUser(@RequestBody AppUserRegistrationInDTO appUserRegistrationDTO) {
             return ResponseEntity.status(201).body(appUserService.create(appUserRegistrationDTO));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> logInUser(@RequestBody AppUserLogInInDTO appUserLogInDTO) {
+    public ResponseEntity<AuthenticationOutDTO> logInUser(@RequestBody AppUserLogInInDTO appUserLogInDTO) {
             return ResponseEntity.ok().body(authenticationService.authenticate(appUserLogInDTO));
     }
 }

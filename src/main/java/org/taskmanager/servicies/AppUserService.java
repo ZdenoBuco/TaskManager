@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.taskmanager.enums.Role;
 import org.taskmanager.exceptions.TaskManagerException;
 import org.taskmanager.models.AppUser;
-import org.taskmanager.models.OutDTOs.AuthenticationResponse;
+import org.taskmanager.models.OutDTOs.AuthenticationOutDTO;
 import org.taskmanager.models.InDTOs.AppUserRegistrationInDTO;
 import org.taskmanager.models.Password;
 import org.taskmanager.repositories.AppUserRepository;
@@ -27,7 +27,7 @@ public class AppUserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthenticationResponse create(AppUserRegistrationInDTO appUserDto) {
+    public AuthenticationOutDTO create(AppUserRegistrationInDTO appUserDto) {
         AppUserRegistrationDtoValidator.validate(appUserDto);
 
         if (appUserRepository.existsAppUserByEmail(appUserDto.getEmail())) {
@@ -58,6 +58,6 @@ public class AppUserService {
         claims.put("admin", appUser.getRole() == Role.ADMIN);
 
         String jwtToken = jwtService.generateToken(claims, appUserRepository.findAppUserById(appUser.getId()).get());
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationOutDTO.builder().token(jwtToken).build();
     }
 }

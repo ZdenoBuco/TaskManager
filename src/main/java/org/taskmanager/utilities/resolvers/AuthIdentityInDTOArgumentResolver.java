@@ -11,7 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import org.taskmanager.models.InDTOs.AuthIdentityInDTO;
 
 @Component
-public class AuthIdentityArgumentResolver implements HandlerMethodArgumentResolver {
+public class AuthIdentityInDTOArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return AuthIdentityInDTO.class.equals(parameter.getParameterType());

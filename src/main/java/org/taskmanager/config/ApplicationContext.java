@@ -7,7 +7,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.taskmanager.utilities.resolvers.AuthIdentityArgumentResolver;
+import org.taskmanager.utilities.resolvers.AuthIdentityInDTOArgumentResolver;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @EnableWebMvc
 @RequiredArgsConstructor
 public class ApplicationContext implements WebMvcConfigurer {
-    private final AuthIdentityArgumentResolver authIdentityArgumentResolver;
+    private final AuthIdentityInDTOArgumentResolver authIdentityArgumentResolver;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
